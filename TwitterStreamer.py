@@ -10,7 +10,8 @@ from tweepy import TweepError
 from http.client import IncompleteRead as http_incompleteRead
 from urllib3.exceptions import IncompleteRead as urllib3_incompleteRead
 from urllib3.exceptions import ProtocolError
-
+import nltk
+from nltk.corpus import stopwords
 
 class TwitterClient():
     def __init__(self, twitter_user=None):
@@ -166,6 +167,10 @@ def data_collection(number_of_sample_tweets, number_of_power_users, tweets_per_u
     print("Completed data collection")
 
 
+def user_clustering():
+    return True
+
+
 if __name__ == "__main__":
     cluster = MongoClient("mongodb+srv://user:1234@cluster0-qe3mx.mongodb.net/test?retryWrites=true&w=majority")
     db = cluster["tweets"]
@@ -175,12 +180,11 @@ if __name__ == "__main__":
     db.create_collection("tweets")
     collection = db["tweets"]
 
-    data_collection(
-        number_of_sample_tweets=100,
-        number_of_power_users=5,
-        tweets_per_user=20,
-        number_of_hashtags=5,
-        hashtag_related_tweets=100
-    )
-
+    #data_collection(
+    #    number_of_sample_tweets=100,
+    #    number_of_power_users=5,
+    #    tweets_per_user=20,
+    #    number_of_hashtags=5,
+    #    hashtag_related_tweets=100
+    #)
 
