@@ -5,7 +5,7 @@ from tweepy import API
 from pymongo import MongoClient
 import json
 import operator
-import credentials
+from src import credentials
 from tweepy import TweepError
 from http.client import IncompleteRead as http_incompleteRead
 from urllib3.exceptions import IncompleteRead as urllib3_incompleteRead
@@ -14,7 +14,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 import numpy as np
 from sklearn.cluster import KMeans
-
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 class TwitterClient():
     def __init__(self, twitter_user=None):
@@ -40,7 +40,7 @@ class TwitterAuthenticator():
 
 
 class TwitterStreamer():
-    def __init__(self, limit):
+    def __init__(self, limit=10000):
         self.authenticator = TwitterAuthenticator()
         self.listener = StdOutListener(limit)
 
@@ -181,9 +181,6 @@ def user_clustering():
     #Prepare container for the extracted text
     tweets_text = {}
 
-    #Prepare container for vocab of tweets
-    vocabulary = []
-
     #Record duplicated encountered
     duplicates = 0
 
@@ -195,10 +192,10 @@ def user_clustering():
                 tweets_text[tweet["id"]] = text
 
                 # Establish the vocabulary - add words from a tweet that have not been encountered before
-                tokenized_text = text.lower().split(" ")
-                for word in tokenized_text:
-                    if word not in vocabulary:
-                        vocabulary.append(word)
+                #tokenized_text = text.lower().split(" ")
+                #for word in tokenized_text:
+                    #if word not in vocabulary:
+                        #vocabulary.append(word)
 
             else:
                 duplicates += 1
@@ -208,52 +205,71 @@ def user_clustering():
     filtered_vocab = []
 
     #Filter out stopwords from the vocabulary
-    stop_words = set(stopwords.words('english'))
-    for word in vocabulary:
-        if word not in stop_words:
-            filtered_vocab.append(word)
+    #stop_words = set(stopwords.words('english'))
+    #for word in vocabulary:
+        #if word not in stop_words:
+            #filtered_vocab.append(word)
 
 
     #Vectorize the text of tweets by creating a vector with one hot encoding of the size of the vocab
-    for tweet in tweets_text.keys():
-        text = tweets_text[tweet]
-        vectorized_form = []
+    #for tweet in tweets_text.keys():
+        #text = tweets_text[tweet]
+        #vectorized_form = []
 
-        for word in filtered_vocab:
-            if word in text:
-                vectorized_form.append(1)
-            else:
-                vectorized_form.append(0)
+        #for word in filtered_vocab:
+            #if word in text:
+                #vectorized_form.append(1)
+            #else:
+                #vectorized_form.append(0)
 
-        tweets_text[tweet] = np.asarray(vectorized_form)
+        #tweets_text[tweet] = np.asarray(vectorized_form)
 
 
     #Load into data frame for ease of use
-    tweets_frame = pd.DataFrame.from_dict(data=tweets_text, orient="index")
+    tweets_frame = pd.DataFrame.from_dict(data=tweets_text, orient="index", columns=['text'])
+
+    data = tweets_frame['text']
+
+    tf_idf_vectorizor = TfidfVectorizer(stop_words='english', max_features=2000)
+    tf_idf = tf_idf_vectorizor.fit_transform(data)
+
+    model = KMeans(n_clusters=10, max_iter=100)
+    model.fit(tf_idf)
+
+    tweets_frame['cluster'] = model.labels_
+
+    return tweets_frame
 
 
-    #Cluster data into 10% x number of tweets clusters
-    no_of_clusters = int(len(tweets_text.keys()) * 0.1)
+def analyze_clusters(dataFrame, number_of_clusters, collection):
 
-    print("Clustering %d tweets into %d clusters" % (len(tweets_text.keys()), no_of_clusters))
-    clusters_alg = KMeans(n_clusters=no_of_clusters)
-    clusters_alg.fit(tweets_frame)
-
-    #Augument the dataframe with the cluster labels
-    tweets_frame['cluster'] = clusters_alg.labels_
-
-    return no_of_clusters, tweets_frame
-
-
-def analyze_clusters(dataFrame, number_of_clusters):
-
+    streamer = TwitterStreamer()
     cluster_ids = {}
 
     for cluster in range(number_of_clusters):
         cluster_vals = dataFrame[dataFrame['cluster'] == cluster]
         cluster_ids[cluster] = cluster_vals.index.tolist()
 
-    print(ids)
+    tweets_per_cluster = {}
+    for cluster in cluster_ids.keys():
+        found_tweets = []
+        ids = cluster_ids[cluster]
+
+        for id in ids:
+            found_tweets.append(collection.find_one({'id': id}))
+
+        tweets_per_cluster[cluster] = found_tweets
+
+
+    for cluster in tweets_per_cluster.keys():
+
+        tweets = tweets_per_cluster[cluster]
+        size = len(tweets)
+
+        users, hashtags = streamer.find_powerusers_and_topics(tweets, 1, 1)
+        print("Cluster %d has %d tweets " % (cluster, size))
+        print("User ", users[0], "Hashtag", hashtags)
+
 
 if __name__ == "__main__":
     cluster = MongoClient("mongodb+srv://user:1234@cluster0-qe3mx.mongodb.net/test?retryWrites=true&w=majority")
@@ -262,16 +278,18 @@ if __name__ == "__main__":
     # Drop the collection and starts it up again fresh with every run
     collection = db["tweets"]
 
-    # data_collection(
-    #   number_of_sample_tweets=100,
-    #   number_of_power_users=5,
-    #   tweets_per_user=20,
-    #  number_of_hashtags=5,
-    #  hashtag_related_tweets=100
+    #data_collection(
+    #   number_of_sample_tweets=10000,
+    #   number_of_power_users=50,
+     #  tweets_per_user=20,
+    #  number_of_hashtags=20,
+    #  hashtag_related_tweets=2000
     # )
 
     #Transform data and cluster based on the text
-    number_of_clusters, cluster_data = user_clustering()
+    clustered_tweets = user_clustering()
+
+    print(clustered_tweets['cluster'])
 
     #Return analysis of clusters
-    analyze_clusters(cluster_data, number_of_clusters)
+    #analyze_clusters(cluster_data, number_of_clusters, collection)
