@@ -256,27 +256,27 @@ def analyze_clusters(dataFrame, number_of_clusters):
 
     return tweets_per_cluster
 
-def find_quote_network(tweets):
+def find_mentions_network(tweets):
 
-    quote_network = {}
+    mentions_network = {}
 
     for tweet in tweets:
-        if 'user' in tweet.keys():
+        if 'user' in tweet.keys() and 'retweeted_status' not in tweet.keys() and tweet['is_quote_status'] == False:
             username = tweet['user']['screen_name']
             quotes = tweet['entities']['user_mentions']
             if len(quotes) != 0:
-                if username not in quote_network.keys():
+                if username not in mentions_network.keys():
                     for mention in quotes:
-                        quote_network[username] = {mention['screen_name']: 1}
+                        mentions_network[username] = {mention['screen_name']: 1}
                 else:
                     for mention in quotes:
                         mentioned_user = mention['screen_name']
-                        if mentioned_user in quote_network[username].keys():
-                            quote_network[username][mentioned_user] += 1
+                        if mentioned_user in mentions_network[username].keys():
+                            mentions_network[username][mentioned_user] += 1
                         else:
-                            quote_network[username][mentioned_user] = 1
+                            mentions_network[username][mentioned_user] = 1
 
-    return quote_network
+    return mentions_network
 
 
 def find_retweet_network(tweets):
@@ -284,21 +284,71 @@ def find_retweet_network(tweets):
     retweet_network = {}
 
     for tweet in tweets:
-        if 'user' in tweet.keys():
-
-
-
-
-
-
-
+        if 'user' in tweet.keys() and 'retweeted_status' in tweet.keys():
+            username = tweet['user']['screen_name']
+            retweeted_user = tweet['retweeted_status']['user']['screen_name']
+            if username not in retweet_network.keys():
+                retweet_network[username] = {retweeted_user : 1}
+            else:
+                retweeted_users = retweet_network[username]
+                if retweeted_user in retweeted_users.keys():
+                    retweet_network[username][retweeted_user] += 1
+                else:
+                    retweet_network[username][retweeted_user] = 1
 
     return retweet_network
 
+def find_quote_network(tweets):
+
+    quote_network = {}
+
+    #count = 0
+
+    for tweet in tweets:
+        if 'user' in tweet.keys() and 'quoted_status' in tweet.keys():
+            #count += 1
+            username = tweet['user']['screen_name']
+            quoted_user = tweet['quoted_status']['user']['screen_name']
+            if username not in quote_network.keys():
+                quote_network[username] = {quoted_user : 1}
+            else:
+                quoted_users = quote_network[username]
+                if quoted_user in quoted_users.keys():
+                    quote_network[username][quoted_user] += 1
+                else:
+                    quote_network[username][quoted_user] = 1
+
+    #print(count, len(quote_network.keys()))
+    return quote_network
+
+
 def find_hashtag_network(tweets):
-    return True
 
+    hashtags = {}
 
+    for tweet in tweets:
+        if 'entities' in tweet.keys():
+            tweet_hashtags = tweet['entities']['hashtags']
+            if len(tweet_hashtags) != 0:
+                for hashtag in tweet_hashtags:
+                    text = hashtag['text']
+                    if text not in hashtags.keys():
+                        other_hashtags = []
+                        for hashtag_other in tweet_hashtags:
+                            text_other = hashtag_other['text']
+                            if text != text_other:
+                                other_hashtags.append(text_other)
+                        hashtags[text] = other_hashtags
+                    else:
+                        other_hashtags = []
+                        for hashtag_other in tweet_hashtags:
+                            text_other = hashtag_other['text']
+                            if text != text_other:
+                                other_hashtags.append(text_other)
+                            for other_hashtag in other_hashtags:
+                                if other_hashtag not in hashtags[text]:
+                                    hashtags[text].append(text_other)
+    return hashtags
 
 
 if __name__ == "__main__":
@@ -320,7 +370,7 @@ if __name__ == "__main__":
 
     tweets = collection.find({})
 
-    find_quote_network(tweets)
+    print(find_hashtag_network(tweets))
 
 
 
