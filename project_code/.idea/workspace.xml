@@ -18,19 +18,21 @@
       <file leaf-file-name="TwitterCrawler.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="242" column="0" lean-forward="true" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+            <state relative-caret-position="535">
+              <caret line="284" column="0" lean-forward="true" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
-                <element signature="e#618#1155#0" expanded="false" />
-                <element signature="e#1192#1415#0" expanded="false" />
-                <element signature="e#1643#1900#0" expanded="false" />
-                <element signature="e#1946#2179#0" expanded="false" />
-                <element signature="e#2217#2532#0" expanded="false" />
-                <element signature="e#2621#3592#0" expanded="false" />
-                <element signature="e#3637#4625#0" expanded="false" />
-                <element signature="e#4782#6113#0" expanded="false" />
-                <element signature="e#8187#8991#0" expanded="false" />
+                <element signature="e#591#1128#0" expanded="false" />
+                <element signature="e#1165#1388#0" expanded="false" />
+                <element signature="e#1616#1873#0" expanded="false" />
+                <element signature="e#1919#2152#0" expanded="false" />
+                <element signature="e#2190#2505#0" expanded="false" />
+                <element signature="e#2594#3520#0" expanded="false" />
+                <element signature="e#3565#4553#0" expanded="false" />
+                <element signature="e#4710#6041#0" expanded="false" />
+                <element signature="e#6090#7357#0" expanded="false" />
+                <element signature="e#7400#7516#0" expanded="false" />
+                <element signature="e#7576#8653#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -299,7 +301,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -310,15 +312,17 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
-            <element signature="e#618#1155#0" expanded="false" />
-            <element signature="e#1192#1415#0" expanded="false" />
-            <element signature="e#1643#1900#0" expanded="false" />
-            <element signature="e#1946#2179#0" expanded="false" />
-            <element signature="e#2217#2532#0" expanded="false" />
-            <element signature="e#2621#3592#0" expanded="false" />
-            <element signature="e#3637#4625#0" expanded="false" />
-            <element signature="e#4782#6113#0" expanded="false" />
-            <element signature="e#8187#8991#0" expanded="false" />
+            <element signature="e#591#1128#0" expanded="false" />
+            <element signature="e#1165#1388#0" expanded="false" />
+            <element signature="e#1616#1873#0" expanded="false" />
+            <element signature="e#1919#2152#0" expanded="false" />
+            <element signature="e#2190#2505#0" expanded="false" />
+            <element signature="e#2594#3520#0" expanded="false" />
+            <element signature="e#3565#4553#0" expanded="false" />
+            <element signature="e#4710#6041#0" expanded="false" />
+            <element signature="e#6090#7357#0" expanded="false" />
+            <element signature="e#7400#7516#0" expanded="false" />
+            <element signature="e#7576#8653#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -341,21 +345,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/pymongo/cursor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="389" column="0" lean-forward="false" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="242" column="0" lean-forward="true" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+        <state relative-caret-position="535">
+          <caret line="284" column="0" lean-forward="true" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
-            <element signature="e#618#1155#0" expanded="false" />
-            <element signature="e#1192#1415#0" expanded="false" />
-            <element signature="e#1643#1900#0" expanded="false" />
-            <element signature="e#1946#2179#0" expanded="false" />
-            <element signature="e#2217#2532#0" expanded="false" />
-            <element signature="e#2621#3592#0" expanded="false" />
-            <element signature="e#3637#4625#0" expanded="false" />
-            <element signature="e#4782#6113#0" expanded="false" />
-            <element signature="e#8187#8991#0" expanded="false" />
+            <element signature="e#591#1128#0" expanded="false" />
+            <element signature="e#1165#1388#0" expanded="false" />
+            <element signature="e#1616#1873#0" expanded="false" />
+            <element signature="e#1919#2152#0" expanded="false" />
+            <element signature="e#2190#2505#0" expanded="false" />
+            <element signature="e#2594#3520#0" expanded="false" />
+            <element signature="e#3565#4553#0" expanded="false" />
+            <element signature="e#4710#6041#0" expanded="false" />
+            <element signature="e#6090#7357#0" expanded="false" />
+            <element signature="e#7400#7516#0" expanded="false" />
+            <element signature="e#7576#8653#0" expanded="false" />
           </folding>
         </state>
       </provider>

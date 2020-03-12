@@ -11,8 +11,7 @@ from http.client import IncompleteRead as http_incompleteRead
 from urllib3.exceptions import IncompleteRead as urllib3_incompleteRead
 from urllib3.exceptions import ProtocolError
 import pandas as pd
-from nltk.corpus import stopwords
-import numpy as np
+from copy import deepcopy
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -97,7 +96,6 @@ class TwitterStreamer():
         sorted_hashtags = sorted(hashtags.items(), key=operator.itemgetter(1), reverse=True)[:number_hashtags]
         sorted_users = sorted(users.items(), key=operator.itemgetter(1), reverse=True)[:number_users]
 
-        print(sorted_users, sorted_hashtags)
         return sorted_users, sorted_hashtags
 
 
@@ -173,7 +171,7 @@ def data_collection(number_of_sample_tweets, number_of_power_users, tweets_per_u
     print("Completed data collection")
 
 
-def user_clustering():
+def user_clustering(number_of_clusters):
 
     #Fetch all tweets
     tweets = collection.find({})
@@ -186,43 +184,15 @@ def user_clustering():
 
     # Pre-process tweets by removing duplicates and storing only ids and text
     for tweet in tweets:
-        if 'text' in tweet.keys():
+        if 'text' in tweet.keys() and 'user' in tweet.keys():
             if tweet['id'] not in tweets_text.keys():
                 text = tweet["text"]
                 tweets_text[tweet["id"]] = text
-
-                # Establish the vocabulary - add words from a tweet that have not been encountered before
-                #tokenized_text = text.lower().split(" ")
-                #for word in tokenized_text:
-                    #if word not in vocabulary:
-                        #vocabulary.append(word)
 
             else:
                 duplicates += 1
 
     print("Removed %d duplicates" % duplicates)
-
-    filtered_vocab = []
-
-    #Filter out stopwords from the vocabulary
-    #stop_words = set(stopwords.words('english'))
-    #for word in vocabulary:
-        #if word not in stop_words:
-            #filtered_vocab.append(word)
-
-
-    #Vectorize the text of tweets by creating a vector with one hot encoding of the size of the vocab
-    #for tweet in tweets_text.keys():
-        #text = tweets_text[tweet]
-        #vectorized_form = []
-
-        #for word in filtered_vocab:
-            #if word in text:
-                #vectorized_form.append(1)
-            #else:
-                #vectorized_form.append(0)
-
-        #tweets_text[tweet] = np.asarray(vectorized_form)
 
 
     #Load into data frame for ease of use
@@ -230,45 +200,105 @@ def user_clustering():
 
     data = tweets_frame['text']
 
+    #Transform the text into vectors of tf_idf form
     tf_idf_vectorizor = TfidfVectorizer(stop_words='english', max_features=2000)
     tf_idf = tf_idf_vectorizor.fit_transform(data)
 
-    model = KMeans(n_clusters=10, max_iter=100)
+    print("Beginning clustering data")
+    #Initialize clustering model and cluster data
+    model = KMeans(n_clusters=number_of_clusters, max_iter=100)
     model.fit(tf_idf)
 
+    #Augument the data frame with cluster labels
     tweets_frame['cluster'] = model.labels_
 
+    print("Finished clustering data")
     return tweets_frame
 
+def find_matching_tweet(tweets, id):
+    for tweet in tweets:
+        if 'id' in tweet.keys():
+            if tweet['id'] == id:
+                return tweet
 
-def analyze_clusters(dataFrame, number_of_clusters, collection):
+def analyze_clusters(dataFrame, number_of_clusters):
 
     streamer = TwitterStreamer()
     cluster_ids = {}
+    tweets = collection.find({})
 
     for cluster in range(number_of_clusters):
         cluster_vals = dataFrame[dataFrame['cluster'] == cluster]
         cluster_ids[cluster] = cluster_vals.index.tolist()
 
     tweets_per_cluster = {}
+
     for cluster in cluster_ids.keys():
-        found_tweets = []
+        cluster_tweets = []
         ids = cluster_ids[cluster]
+        tweets_deepcopy = deepcopy(tweets)
+        for tweet_id in ids:
+            found_tweet = find_matching_tweet(tweets_deepcopy, tweet_id)
+            cluster_tweets.append(found_tweet)
 
-        for id in ids:
-            found_tweets.append(collection.find_one({'id': id}))
-
-        tweets_per_cluster[cluster] = found_tweets
+        tweets_per_cluster[cluster] = cluster_tweets
+        print("Found tweets for cluster %s" % cluster)
 
 
     for cluster in tweets_per_cluster.keys():
 
-        tweets = tweets_per_cluster[cluster]
-        size = len(tweets)
+        tweets_to_analyze = tweets_per_cluster[cluster]
+        size = len(tweets_to_analyze)
 
-        users, hashtags = streamer.find_powerusers_and_topics(tweets, 1, 1)
-        print("Cluster %d has %d tweets " % (cluster, size))
-        print("User ", users[0], "Hashtag", hashtags)
+        users, hashtags = streamer.find_powerusers_and_topics(tweets_to_analyze, 1, 1)
+        print("Cluster %d has %d tweets with  " % (cluster, size))
+        print("Power user: ", users, "Hashtags: ", hashtags)
+
+    return tweets_per_cluster
+
+def find_quote_network(tweets):
+
+    quote_network = {}
+
+    for tweet in tweets:
+        if 'user' in tweet.keys():
+            username = tweet['user']['screen_name']
+            quotes = tweet['entities']['user_mentions']
+            if len(quotes) != 0:
+                if username not in quote_network.keys():
+                    for mention in quotes:
+                        quote_network[username] = {mention['screen_name']: 1}
+                else:
+                    for mention in quotes:
+                        mentioned_user = mention['screen_name']
+                        if mentioned_user in quote_network[username].keys():
+                            quote_network[username][mentioned_user] += 1
+                        else:
+                            quote_network[username][mentioned_user] = 1
+
+    return quote_network
+
+
+def find_retweet_network(tweets):
+
+    retweet_network = {}
+
+    for tweet in tweets:
+        if 'user' in tweet.keys():
+
+
+
+
+
+
+
+
+    return retweet_network
+
+def find_hashtag_network(tweets):
+    return True
+
+
 
 
 if __name__ == "__main__":
@@ -278,18 +308,20 @@ if __name__ == "__main__":
     # Drop the collection and starts it up again fresh with every run
     collection = db["tweets"]
 
-    #data_collection(
-    #   number_of_sample_tweets=10000,
-    #   number_of_power_users=50,
-     #  tweets_per_user=20,
-    #  number_of_hashtags=20,
-    #  hashtag_related_tweets=2000
-    # )
+    #data_collection(number_of_sample_tweets=200, number_of_power_users=5, tweets_per_user=20, number_of_hashtags=5,hashtag_related_tweets=50)
+
+    number_of_clusters = 3
 
     #Transform data and cluster based on the text
-    clustered_tweets = user_clustering()
-
-    print(clustered_tweets['cluster'])
+    clustered_tweets = user_clustering(number_of_clusters)
 
     #Return analysis of clusters
-    #analyze_clusters(cluster_data, number_of_clusters, collection)
+    tweets_by_cluster = analyze_clusters(clustered_tweets, number_of_clusters)
+
+    tweets = collection.find({})
+
+    find_quote_network(tweets)
+
+
+
+
