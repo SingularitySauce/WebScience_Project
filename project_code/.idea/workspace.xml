@@ -18,26 +18,23 @@
       <file leaf-file-name="TwitterCrawler.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="396" column="0" lean-forward="true" selection-start-line="395" selection-start-column="58" selection-end-line="396" selection-end-column="0" />
+            <state relative-caret-position="-3630">
+              <caret line="42" column="36" lean-forward="true" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
               <folding>
+                <element signature="e#0#43#0" expanded="true" />
                 <element signature="e#592#1129#0" expanded="false" />
                 <element signature="e#1166#1389#0" expanded="false" />
-                <element signature="e#1421#3521#0" expanded="false" />
-                <element signature="e#1617#1874#0" expanded="false" />
-                <element signature="e#1920#2153#0" expanded="false" />
-                <element signature="e#2191#2506#0" expanded="false" />
-                <element signature="e#2595#3521#0" expanded="false" />
-                <element signature="e#3566#4554#0" expanded="false" />
-                <element signature="e#4711#6042#0" expanded="false" />
-                <element signature="e#6090#7363#0" expanded="false" />
-                <element signature="e#7407#7523#0" expanded="false" />
-                <element signature="e#7583#8658#0" expanded="false" />
-                <element signature="e#8700#9607#0" expanded="false" />
-                <element signature="e#9648#10339#0" expanded="false" />
-                <element signature="e#10378#11116#0" expanded="false" />
-                <element signature="e#11157#12356#0" expanded="false" />
-                <element signature="e#12398#13358#0" expanded="false" />
+                <element signature="e#2251#2660#0" expanded="false" />
+                <element signature="e#2699#3018#0" expanded="false" />
+                <element signature="e#3107#4033#0" expanded="false" />
+                <element signature="e#4078#5066#0" expanded="false" />
+                <element signature="e#5223#6610#0" expanded="false" />
+                <element signature="e#6667#7883#0" expanded="false" />
+                <element signature="e#7927#8043#0" expanded="false" />
+                <element signature="e#8111#9153#0" expanded="false" />
+                <element signature="e#9195#10102#0" expanded="false" />
+                <element signature="e#10143#10834#0" expanded="false" />
+                <element signature="e#11652#12851#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -56,7 +53,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/credentials.py" />
-        <option value="$PROJECT_DIR$/../../WS_AE/WebScience_Project/TwitterStreamer.py" />
+        <option value="$USER_HOME$/WS_AE/WebScience_Project/TwitterStreamer.py" />
         <option value="$PROJECT_DIR$/src/TwitterCrawler.py" />
       </list>
     </option>
@@ -280,25 +277,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43044907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.63526833" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -316,23 +313,43 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#0#43#0" expanded="true" />
             <element signature="e#592#1129#0" expanded="false" />
             <element signature="e#1166#1389#0" expanded="false" />
-            <element signature="e#1421#3521#0" expanded="false" />
-            <element signature="e#1617#1874#0" expanded="false" />
-            <element signature="e#1920#2153#0" expanded="false" />
-            <element signature="e#2191#2506#0" expanded="false" />
-            <element signature="e#2595#3521#0" expanded="false" />
-            <element signature="e#3566#4554#0" expanded="false" />
-            <element signature="e#4711#6042#0" expanded="false" />
-            <element signature="e#6090#7363#0" expanded="false" />
-            <element signature="e#7407#7523#0" expanded="false" />
-            <element signature="e#7583#8658#0" expanded="false" />
-            <element signature="e#8700#9607#0" expanded="false" />
-            <element signature="e#9648#10339#0" expanded="false" />
-            <element signature="e#10378#11116#0" expanded="false" />
-            <element signature="e#11157#12356#0" expanded="false" />
-            <element signature="e#12398#13358#0" expanded="false" />
+            <element signature="e#2251#2660#0" expanded="false" />
+            <element signature="e#2699#3018#0" expanded="false" />
+            <element signature="e#3107#4033#0" expanded="false" />
+            <element signature="e#4078#5066#0" expanded="false" />
+            <element signature="e#5223#6610#0" expanded="false" />
+            <element signature="e#6667#7883#0" expanded="false" />
+            <element signature="e#7927#8043#0" expanded="false" />
+            <element signature="e#8111#9153#0" expanded="false" />
+            <element signature="e#9195#10102#0" expanded="false" />
+            <element signature="e#10143#10834#0" expanded="false" />
+            <element signature="e#11652#12851#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#592#1129#0" expanded="false" />
+            <element signature="e#1166#1389#0" expanded="false" />
+            <element signature="e#2251#2660#0" expanded="false" />
+            <element signature="e#2699#3018#0" expanded="false" />
+            <element signature="e#3107#4033#0" expanded="false" />
+            <element signature="e#4078#5066#0" expanded="false" />
+            <element signature="e#5223#6610#0" expanded="false" />
+            <element signature="e#6667#7883#0" expanded="false" />
+            <element signature="e#7927#8043#0" expanded="false" />
+            <element signature="e#8111#9153#0" expanded="false" />
+            <element signature="e#9195#10102#0" expanded="false" />
+            <element signature="e#10143#10834#0" expanded="false" />
+            <element signature="e#11652#12851#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -341,17 +358,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="74" lean-forward="false" selection-start-line="3" selection-start-column="74" selection-end-line="3" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../WS_AE/WebScience_Project/credentials.py" />
-    <entry file="file://$PROJECT_DIR$/../../WS_AE/WebScience_Project/TwitterStreamer.py" />
+    <entry file="file://$USER_HOME$/WS_AE/WebScience_Project/credentials.py" />
+    <entry file="file://$USER_HOME$/WS_AE/WebScience_Project/TwitterStreamer.py" />
     <entry file="file://$PROJECT_DIR$/src/credentials.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="74" lean-forward="false" selection-start-line="3" selection-start-column="74" selection-end-line="3" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -359,32 +374,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="389" column="0" lean-forward="false" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="396" column="0" lean-forward="true" selection-start-line="395" selection-start-column="58" selection-end-line="396" selection-end-column="0" />
+        <state relative-caret-position="-3630">
+          <caret line="42" column="36" lean-forward="true" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
           <folding>
+            <element signature="e#0#43#0" expanded="true" />
             <element signature="e#592#1129#0" expanded="false" />
             <element signature="e#1166#1389#0" expanded="false" />
-            <element signature="e#1421#3521#0" expanded="false" />
-            <element signature="e#1617#1874#0" expanded="false" />
-            <element signature="e#1920#2153#0" expanded="false" />
-            <element signature="e#2191#2506#0" expanded="false" />
-            <element signature="e#2595#3521#0" expanded="false" />
-            <element signature="e#3566#4554#0" expanded="false" />
-            <element signature="e#4711#6042#0" expanded="false" />
-            <element signature="e#6090#7363#0" expanded="false" />
-            <element signature="e#7407#7523#0" expanded="false" />
-            <element signature="e#7583#8658#0" expanded="false" />
-            <element signature="e#8700#9607#0" expanded="false" />
-            <element signature="e#9648#10339#0" expanded="false" />
-            <element signature="e#10378#11116#0" expanded="false" />
-            <element signature="e#11157#12356#0" expanded="false" />
-            <element signature="e#12398#13358#0" expanded="false" />
+            <element signature="e#2251#2660#0" expanded="false" />
+            <element signature="e#2699#3018#0" expanded="false" />
+            <element signature="e#3107#4033#0" expanded="false" />
+            <element signature="e#4078#5066#0" expanded="false" />
+            <element signature="e#5223#6610#0" expanded="false" />
+            <element signature="e#6667#7883#0" expanded="false" />
+            <element signature="e#7927#8043#0" expanded="false" />
+            <element signature="e#8111#9153#0" expanded="false" />
+            <element signature="e#9195#10102#0" expanded="false" />
+            <element signature="e#10143#10834#0" expanded="false" />
+            <element signature="e#11652#12851#0" expanded="false" />
           </folding>
         </state>
       </provider>

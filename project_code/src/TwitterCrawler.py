@@ -55,21 +55,43 @@ class TwitterStreamer():
         auth = self.authenticator.authenticate_app()
         stream = Stream(auth, self.listener)
 
-        try:
-            stream.sample(languages=['en'], stall_warnings=True)
-        except (ProtocolError, AttributeError):
-            pass
+        while self.listener.count != 0:
+            try:
+                stream.sample(languages=['en'], stall_warnings=True)
+            except (ProtocolError, AttributeError):
+                continue
 
     def store_sample(self):
         # Create a sample of data - 2000 out of 20,000 tweets
         tweets = collection.find({}).limit(2000)
 
+        temp_tweets = []
+
+        for tweet in tweets:
+            tweet.pop('_id')
+            temp_tweets.append(tweet)
+
+        # Save sample data to a file
+        with open("sample.json", 'w') as f:
+            f.write(json.dumps(temp_tweets))
+
+
+        print("Stored sample of 2000 tweets as .json")
+
+    def store_as_json(self):
+        tweets = collection.find({})
+
+        temp_tweets = []
+
+        for tweet in tweets:
+            tweet.pop('_id')
+            temp_tweets.append(tweet)
+
         # Save sample data to a file
         with open("tweets.json", 'w') as f:
-            for tweet in tweets:
-                tweet.pop('_id')
-                t = json.dumps(tweet)
-                f.write(t)
+            f.write(json.dumps(temp_tweets))
+
+        print("Stored tweets as .json")
 
     def find_powerusers_and_topics(self, data, number_users, number_hashtags):
         users = {}
@@ -102,7 +124,7 @@ class TwitterStreamer():
 
 class StdOutListener(StreamListener):
     def __init__(self, limit):
-        self.count = 0
+        self.count = 1
         self.limit = limit
 
     def on_data(self, data):
@@ -146,15 +168,14 @@ def data_collection(number_of_sample_tweets, number_of_power_users, tweets_per_u
     streamer = TwitterStreamer(number_of_sample_tweets)
     streamer.stream_tweets_sample()
 
-    # Store sample data as .json
-    streamer.store_sample()
-
     # Fetch all tweets
     tweets = collection.find({})
 
     # Find a desired number of power users and popular hashtags to follow
     power_users, hashtags = streamer.find_powerusers_and_topics(tweets, number_users=number_of_power_users,
                                                                 number_hashtags=number_of_hashtags)
+
+
 
     # Enrich the data by fetching tweets by power users and tweets relating to the identified topics
     for user in power_users:
@@ -171,10 +192,14 @@ def data_collection(number_of_sample_tweets, number_of_power_users, tweets_per_u
     streamer.stream_tweets_topic(hashtag_list=hashtag_list, limit=hashtag_related_tweets)
     print("Completed data collection")
 
+    #Store data as json
+    streamer.store_as_json()
 
-def user_clustering(number_of_clusters):
-    # Fetch all tweets
-    tweets = collection.find({})
+    # Store sample data as .json
+    streamer.store_sample()
+
+
+def user_clustering(tweets, number_of_clusters):
 
     # Prepare container for the extracted text
     tweets_text = {}
@@ -222,10 +247,9 @@ def find_matching_tweet(tweets, id):
                 return tweet
 
 
-def analyze_clusters(dataFrame, number_of_clusters):
+def analyze_clusters(dataFrame, number_of_clusters, tweets):
     streamer = TwitterStreamer()
     cluster_ids = {}
-    tweets = collection.find({})
 
     for cluster in range(number_of_clusters):
         cluster_vals = dataFrame[dataFrame['cluster'] == cluster]
@@ -347,14 +371,10 @@ def find_hashtag_network(tweets):
     return hashtags
 
 
-def find_ties_and_triads(tweets):
+def find_ties_and_triads(mentions_network, retweet_network, quote_network):
 
     ties = []
     triads = []
-
-    mentions_network = find_mentions_network(tweets)
-    retweet_network = find_retweet_network(tweets)
-    quote_network = find_quote_network(tweets)
 
     networks = [mentions_network, retweet_network, quote_network]
 
@@ -382,24 +402,101 @@ def find_ties_and_triads(tweets):
 
 
 if __name__ == "__main__":
+
     cluster = MongoClient("mongodb+srv://user:1234@cluster0-qe3mx.mongodb.net/test?retryWrites=true&w=majority")
     db = cluster["tweets"]
 
     # Drop the collection and starts it up again fresh with every run
     collection = db["tweets"]
 
-    data_collection(number_of_sample_tweets=10000, number_of_power_users=50, tweets_per_user=50, number_of_hashtags=20,hashtag_related_tweets=1000)
+    #Collect the desired amount of data !!!!!UNCOMMENT TO RUN DATA COLLECTION OTHERWISE CODE WILL START FROM PART 2 ONWARDS!!!!
+    #data_collection(number_of_sample_tweets=20000, number_of_power_users=50, tweets_per_user=20, number_of_hashtags=50,hashtag_related_tweets=2000)
 
+
+    #Load data from the .json file
+    tweets = []
+
+    #To work with sample data, change 'tweets.json' to 'sample.json'
+    for line in open('tweets.json', 'r'):
+        tweets.append(json.loads(line))
+    tweets = tweets[0]
+
+
+    #Pick a desired number of clusters
     number_of_clusters = 10
 
     # Transform data and cluster based on the text
-    clustered_tweets = user_clustering(number_of_clusters)
+    clustered_tweets = user_clustering(tweets, number_of_clusters)
 
     # Return analysis of clusters
-    tweets_by_cluster = analyze_clusters(clustered_tweets, number_of_clusters)
+    tweets_by_cluster = analyze_clusters(clustered_tweets, number_of_clusters, tweets)
 
-    tweets = collection.find({})
 
-    ties, triads = find_ties_and_triads(tweets)
+    #Find networks for general data and for all clusters
+    print("Mentions network for general data")
+    mentions_network_general_data = find_mentions_network(tweets)
+    print(mentions_network_general_data)
+    print("Mentions network size: %d" % len(mentions_network_general_data.keys()))
 
-    print(triads)
+    print("Retweet network for general data")
+    retweet_network_general_data = find_retweet_network(tweets)
+    print(retweet_network_general_data)
+    print("Retweet network size: %d" % len(retweet_network_general_data.keys()))
+
+    print("Quote network for general data")
+    quote_network_general_data = find_quote_network(tweets)
+    print(quote_network_general_data)
+    print("Quote network size: %d" % len(quote_network_general_data.keys()))
+
+    print("Hashtag network for general data")
+    hashtags_general_data = find_hashtag_network(tweets)
+    print(hashtags_general_data)
+    print("Found %d hashtags" % len(hashtags_general_data.keys()))
+
+
+    cluster_networks = {}
+
+    for cluster in tweets_by_cluster.keys():
+        tweets_for_cluster = tweets_by_cluster[cluster]
+
+        print("Mentions network for cluster %d" % cluster)
+        mentions_cluster_network = find_mentions_network(tweets_for_cluster)
+        print(mentions_cluster_network)
+        print("Mentions network size: %d" % len(mentions_cluster_network.keys()))
+
+        print("Retweet network for cluster %d" % cluster)
+        retweet_cluster_network = find_retweet_network(tweets_for_cluster)
+        print(retweet_cluster_network)
+        print("Retweet network size: %d" % len(retweet_cluster_network.keys()))
+
+        print("Quote network for cluster %d" % cluster)
+        quote_cluster_network = find_quote_network(tweets_for_cluster)
+        print(quote_cluster_network)
+        print("Quote network size: %d" % len(quote_cluster_network.keys()))
+
+        print("Hashtag network for cluster %d" % cluster)
+        hashtags_for_cluster = find_hashtag_network(tweets_for_cluster)
+        print(hashtags_for_cluster)
+        print("Found %d hashtags" % len(hashtags_for_cluster.keys()))
+
+        cluster_networks[cluster] = [mentions_cluster_network, retweet_cluster_network, quote_cluster_network]
+
+
+    #Find ties and triads within general data and clusters
+
+    ties, triads = find_ties_and_triads(mentions_network_general_data, retweet_network_general_data, quote_network_general_data)
+
+    print("Within general data there are %d ties and %d triads" % (len(ties), len(triads)))
+
+
+    for cluster in cluster_networks.keys():
+
+        mentions = cluster_networks[cluster][0]
+        retweets = cluster_networks[cluster][1]
+        quotes = cluster_networks[cluster][2]
+
+        ties, triads = find_ties_and_triads(mentions, retweets, quotes)
+
+        print("Within cluster %d data there are %d ties and %d triads" % (cluster, len(ties), len(triads)))
+
+
