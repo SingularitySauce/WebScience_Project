@@ -15,6 +15,7 @@ from copy import deepcopy
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+
 class TwitterClient():
     def __init__(self, twitter_user=None):
         self.authenticator = TwitterAuthenticator().authenticate_app()
@@ -172,14 +173,13 @@ def data_collection(number_of_sample_tweets, number_of_power_users, tweets_per_u
 
 
 def user_clustering(number_of_clusters):
-
-    #Fetch all tweets
+    # Fetch all tweets
     tweets = collection.find({})
 
-    #Prepare container for the extracted text
+    # Prepare container for the extracted text
     tweets_text = {}
 
-    #Record duplicated encountered
+    # Record duplicated encountered
     duplicates = 0
 
     # Pre-process tweets by removing duplicates and storing only ids and text
@@ -194,26 +194,26 @@ def user_clustering(number_of_clusters):
 
     print("Removed %d duplicates" % duplicates)
 
-
-    #Load into data frame for ease of use
+    # Load into data frame for ease of use
     tweets_frame = pd.DataFrame.from_dict(data=tweets_text, orient="index", columns=['text'])
 
     data = tweets_frame['text']
 
-    #Transform the text into vectors of tf_idf form
+    # Transform the text into vectors of tf_idf form
     tf_idf_vectorizor = TfidfVectorizer(stop_words='english', max_features=2000)
     tf_idf = tf_idf_vectorizor.fit_transform(data)
 
     print("Beginning clustering data")
-    #Initialize clustering model and cluster data
+    # Initialize clustering model and cluster data
     model = KMeans(n_clusters=number_of_clusters, max_iter=100)
     model.fit(tf_idf)
 
-    #Augument the data frame with cluster labels
+    # Augument the data frame with cluster labels
     tweets_frame['cluster'] = model.labels_
 
     print("Finished clustering data")
     return tweets_frame
+
 
 def find_matching_tweet(tweets, id):
     for tweet in tweets:
@@ -221,8 +221,8 @@ def find_matching_tweet(tweets, id):
             if tweet['id'] == id:
                 return tweet
 
-def analyze_clusters(dataFrame, number_of_clusters):
 
+def analyze_clusters(dataFrame, number_of_clusters):
     streamer = TwitterStreamer()
     cluster_ids = {}
     tweets = collection.find({})
@@ -244,9 +244,7 @@ def analyze_clusters(dataFrame, number_of_clusters):
         tweets_per_cluster[cluster] = cluster_tweets
         print("Found tweets for cluster %s" % cluster)
 
-
     for cluster in tweets_per_cluster.keys():
-
         tweets_to_analyze = tweets_per_cluster[cluster]
         size = len(tweets_to_analyze)
 
@@ -256,8 +254,8 @@ def analyze_clusters(dataFrame, number_of_clusters):
 
     return tweets_per_cluster
 
-def find_mentions_network(tweets):
 
+def find_mentions_network(tweets):
     mentions_network = {}
 
     for tweet in tweets:
@@ -280,7 +278,6 @@ def find_mentions_network(tweets):
 
 
 def find_retweet_network(tweets):
-
     retweet_network = {}
 
     for tweet in tweets:
@@ -288,7 +285,7 @@ def find_retweet_network(tweets):
             username = tweet['user']['screen_name']
             retweeted_user = tweet['retweeted_status']['user']['screen_name']
             if username not in retweet_network.keys():
-                retweet_network[username] = {retweeted_user : 1}
+                retweet_network[username] = {retweeted_user: 1}
             else:
                 retweeted_users = retweet_network[username]
                 if retweeted_user in retweeted_users.keys():
@@ -298,19 +295,19 @@ def find_retweet_network(tweets):
 
     return retweet_network
 
-def find_quote_network(tweets):
 
+def find_quote_network(tweets):
     quote_network = {}
 
-    #count = 0
+    # count = 0
 
     for tweet in tweets:
         if 'user' in tweet.keys() and 'quoted_status' in tweet.keys():
-            #count += 1
+            # count += 1
             username = tweet['user']['screen_name']
             quoted_user = tweet['quoted_status']['user']['screen_name']
             if username not in quote_network.keys():
-                quote_network[username] = {quoted_user : 1}
+                quote_network[username] = {quoted_user: 1}
             else:
                 quoted_users = quote_network[username]
                 if quoted_user in quoted_users.keys():
@@ -318,12 +315,11 @@ def find_quote_network(tweets):
                 else:
                     quote_network[username][quoted_user] = 1
 
-    #print(count, len(quote_network.keys()))
+    # print(count, len(quote_network.keys()))
     return quote_network
 
 
 def find_hashtag_network(tweets):
-
     hashtags = {}
 
     for tweet in tweets:
@@ -351,6 +347,40 @@ def find_hashtag_network(tweets):
     return hashtags
 
 
+def find_ties_and_triads(tweets):
+
+    ties = []
+    triads = []
+
+    mentions_network = find_mentions_network(tweets)
+    retweet_network = find_retweet_network(tweets)
+    quote_network = find_quote_network(tweets)
+
+    networks = [mentions_network, retweet_network, quote_network]
+
+    for network in networks:
+        users = network.keys()
+        for user in users:
+            connected_users = network[user]
+            for connected_user in connected_users:
+                tie = (user, connected_user)
+                if tie not in ties:
+                    ties.append((user, connected_user))
+
+    for tie in ties:
+        first = tie[0]
+        second = tie[1]
+        for tie_search in ties:
+            potential_second = tie_search[0]
+            potential_third = tie_search[1]
+            if second == potential_second:
+                triad = (first, second, potential_third)
+                if triad not in triads:
+                    triads.append(triad)
+
+    return ties, triads
+
+
 if __name__ == "__main__":
     cluster = MongoClient("mongodb+srv://user:1234@cluster0-qe3mx.mongodb.net/test?retryWrites=true&w=majority")
     db = cluster["tweets"]
@@ -358,20 +388,18 @@ if __name__ == "__main__":
     # Drop the collection and starts it up again fresh with every run
     collection = db["tweets"]
 
-    #data_collection(number_of_sample_tweets=200, number_of_power_users=5, tweets_per_user=20, number_of_hashtags=5,hashtag_related_tweets=50)
+    data_collection(number_of_sample_tweets=10000, number_of_power_users=50, tweets_per_user=50, number_of_hashtags=20,hashtag_related_tweets=1000)
 
-    number_of_clusters = 3
+    number_of_clusters = 10
 
-    #Transform data and cluster based on the text
+    # Transform data and cluster based on the text
     clustered_tweets = user_clustering(number_of_clusters)
 
-    #Return analysis of clusters
+    # Return analysis of clusters
     tweets_by_cluster = analyze_clusters(clustered_tweets, number_of_clusters)
 
     tweets = collection.find({})
 
-    print(find_hashtag_network(tweets))
+    ties, triads = find_ties_and_triads(tweets)
 
-
-
-
+    print(triads)
