@@ -416,8 +416,8 @@ if __name__ == "__main__":
     #Load data from the .json file
     tweets = []
 
-    #To work with sample data, change 'tweets.json' to 'sample.json'
-    for line in open('tweets.json', 'r'):
+    #To work with sample data, change 'tweets.json' to 'sample.json' or vice versa
+    for line in open('sample.json', 'r'):
         tweets.append(json.loads(line))
     tweets = tweets[0]
 

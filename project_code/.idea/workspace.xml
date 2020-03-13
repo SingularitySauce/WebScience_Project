@@ -18,23 +18,12 @@
       <file leaf-file-name="TwitterCrawler.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3630">
-              <caret line="42" column="36" lean-forward="true" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
+            <state relative-caret-position="572">
+              <caret line="418" column="82" lean-forward="false" selection-start-line="418" selection-start-column="82" selection-end-line="418" selection-end-column="82" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
                 <element signature="e#592#1129#0" expanded="false" />
                 <element signature="e#1166#1389#0" expanded="false" />
-                <element signature="e#2251#2660#0" expanded="false" />
-                <element signature="e#2699#3018#0" expanded="false" />
-                <element signature="e#3107#4033#0" expanded="false" />
-                <element signature="e#4078#5066#0" expanded="false" />
-                <element signature="e#5223#6610#0" expanded="false" />
-                <element signature="e#6667#7883#0" expanded="false" />
-                <element signature="e#7927#8043#0" expanded="false" />
-                <element signature="e#8111#9153#0" expanded="false" />
-                <element signature="e#9195#10102#0" expanded="false" />
-                <element signature="e#10143#10834#0" expanded="false" />
-                <element signature="e#11652#12851#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -65,7 +54,7 @@
     <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -78,28 +67,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project_code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project_code" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-    </panes>
+    <panes />
   </component>
   <component name="RunManager" selected="Python.TwitterCrawler">
     <configuration default="false" name="TwitterCrawler" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -277,7 +245,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -316,17 +284,6 @@
             <element signature="e#0#43#0" expanded="true" />
             <element signature="e#592#1129#0" expanded="false" />
             <element signature="e#1166#1389#0" expanded="false" />
-            <element signature="e#2251#2660#0" expanded="false" />
-            <element signature="e#2699#3018#0" expanded="false" />
-            <element signature="e#3107#4033#0" expanded="false" />
-            <element signature="e#4078#5066#0" expanded="false" />
-            <element signature="e#5223#6610#0" expanded="false" />
-            <element signature="e#6667#7883#0" expanded="false" />
-            <element signature="e#7927#8043#0" expanded="false" />
-            <element signature="e#8111#9153#0" expanded="false" />
-            <element signature="e#9195#10102#0" expanded="false" />
-            <element signature="e#10143#10834#0" expanded="false" />
-            <element signature="e#11652#12851#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -339,17 +296,30 @@
             <element signature="e#0#43#0" expanded="true" />
             <element signature="e#592#1129#0" expanded="false" />
             <element signature="e#1166#1389#0" expanded="false" />
-            <element signature="e#2251#2660#0" expanded="false" />
-            <element signature="e#2699#3018#0" expanded="false" />
-            <element signature="e#3107#4033#0" expanded="false" />
-            <element signature="e#4078#5066#0" expanded="false" />
-            <element signature="e#5223#6610#0" expanded="false" />
-            <element signature="e#6667#7883#0" expanded="false" />
-            <element signature="e#7927#8043#0" expanded="false" />
-            <element signature="e#8111#9153#0" expanded="false" />
-            <element signature="e#9195#10102#0" expanded="false" />
-            <element signature="e#10143#10834#0" expanded="false" />
-            <element signature="e#11652#12851#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#592#1129#0" expanded="false" />
+            <element signature="e#1166#1389#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#592#1129#0" expanded="false" />
+            <element signature="e#1166#1389#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -379,23 +349,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TwitterCrawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3630">
-          <caret line="42" column="36" lean-forward="true" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
+        <state relative-caret-position="572">
+          <caret line="418" column="82" lean-forward="false" selection-start-line="418" selection-start-column="82" selection-end-line="418" selection-end-column="82" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
             <element signature="e#592#1129#0" expanded="false" />
             <element signature="e#1166#1389#0" expanded="false" />
-            <element signature="e#2251#2660#0" expanded="false" />
-            <element signature="e#2699#3018#0" expanded="false" />
-            <element signature="e#3107#4033#0" expanded="false" />
-            <element signature="e#4078#5066#0" expanded="false" />
-            <element signature="e#5223#6610#0" expanded="false" />
-            <element signature="e#6667#7883#0" expanded="false" />
-            <element signature="e#7927#8043#0" expanded="false" />
-            <element signature="e#8111#9153#0" expanded="false" />
-            <element signature="e#9195#10102#0" expanded="false" />
-            <element signature="e#10143#10834#0" expanded="false" />
-            <element signature="e#11652#12851#0" expanded="false" />
           </folding>
         </state>
       </provider>
